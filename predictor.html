@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kidney Disease Predictor</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+        /* nav {
+    background-color: teal;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav h1 {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+} */
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #000;
+            border-radius: 10px;
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        input, select {
+            width: 45%;
+            padding: 8px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: teal;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- <nav >
+        <h1> Chronic Kidney Disease Predictor</h1>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="index.html">Logout</a></li>
+    </nav> -->
+
+    <!-- <h2>Kidney Disease Predictor</h2> -->
+    <div class="container">
+        <form id="predictionForm">
+            <div class="form-group">
+                <input type="number" name="age" placeholder="Age">
+                <input type="number" name="bp" placeholder="Blood Pressure">
+            </div>
+            <div class="form-group">
+                <input type="number" step="0.01" name="sg" placeholder="Specific Gravity">
+                <input type="number" name="al" placeholder="Albumin">
+            </div>
+            <div class="form-group">
+                <input type="number" name="su" placeholder="Sugar">
+                <input type="number" name="bgr" placeholder="Blood Glucose Random">
+            </div>
+            <div class="form-group">
+                <input type="number" name="bu" placeholder="Blood Urea">
+                <input type="number" name="sc" placeholder="Serum Creatinine">
+            </div>
+            <div class="form-group">
+                <input type="number" name="sod" placeholder="Sodium">
+                <input type="number" name="pot" placeholder="Potassium">
+            </div>
+            <div class="form-group">
+                <input type="number" name="hemo" placeholder="Hemoglobin">
+                <input type="number" name="pcv" placeholder="Packed Cell Volume">
+            </div>
+            <div class="form-group">
+                <input type="number" name="wc" placeholder="White Blood Cell Count">
+                <input type="number" name="rc" placeholder="Red Blood Cell Count">
+            </div>
+
+            <!-- Categorical Fields -->
+            <div class="form-group">
+                <select name="rbc">
+                    <option value="1">RBC Normal</option>
+                    <option value="0">RBC Abnormal</option>
+                </select>
+                <select name="pc">
+                    <option value="1">Pus Cell Normal</option>
+                    <option value="0">Pus Cell Abnormal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="pcc">
+                    <option value="1">Pus Cell Clumps Present</option>
+                    <option value="0">Pus Cell Clumps Absent</option>
+                </select>
+                <select name="ba">
+                    <option value="1">Bacteria Present</option>
+                    <option value="0">Bacteria Absent</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="htn">
+                    <option value="1">Hypertension YES</option>
+                    <option value="0">Hypertension NO</option>
+                </select>
+                <select name="dm">
+                    <option value="1">Diabetes Present</option>
+                    <option value="0">Diabetes Absent</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="cad">
+                    <option value="1">Coronary Artery Disease YES</option>
+                    <option value="0">Coronary Artery Disease NO</option>
+                </select>
+                <select name="pe">
+                    <option value="1">Pedal Edema Present</option>
+                    <option value="0">Pedal Edema Absent</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="ane">
+                    <option value="1">Anemia YES</option>
+                    <option value="0">Anemia NO</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="appet">
+                    <option value="1"> APPETITE Good</option>
+                    <option value="0"> APPETITE Poor</option>
+                </select>
+            </div>
+
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("predictionForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            console.log("Form Data:", data); // To check data being submitted
+            
+            fetch("/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => alert("Prediction Result: " + result.prediction))
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>
